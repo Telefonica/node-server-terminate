@@ -1,0 +1,31 @@
+{
+  "name": "server-terminate",
+  "version": "0.1.0",
+  "description": "Allow terminating a server in an orderly fashion",
+  "license": "MIT",
+  "author": "Jose Antonio Rodríguez <joseantonio.rodriguezfernandez@telefonica.com>",
+  "main": "index",
+  "scripts": {
+    "lint": "jscs index.js && eslint index.js",
+    "prepublish": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Telefonica/node-server-terminate.git"
+  },
+  "bugs": "https://github.com/Telefonica/node-server-terminate/issues",
+  "engines": {
+    "node": ">=0.10",
+    "npm": ">=1.4.0"
+  },
+  "keywords": [
+    "server",
+    "shutdown",
+    "terminate",
+    "close"
+  ],
+  "devDependencies": {
+    "eslint": "^1.5.0",
+    "jscs": "^2.1.1"
+  }
+}
