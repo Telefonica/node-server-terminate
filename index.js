@@ -2,7 +2,7 @@
 
  The MIT License (MIT)
 
- Copyright (c) 2015 Jose Antonio Rodríguez
+ Copyright (c) 2015 Telefónica Investigación y Desarrollo, S.A.U
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
