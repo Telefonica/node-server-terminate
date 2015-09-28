@@ -26,7 +26,10 @@
 
 'use strict';
 
-module.exports = function enableTerminate(server) {
+module.exports = function enableTerminate(server, opts) {
+  opts = opts || {};
+  opts.timeout = opts.timeout || 60 * 1000;
+
   var connections = {};
 
   server.on('connection', function(conn) {
@@ -49,16 +52,14 @@ module.exports = function enableTerminate(server) {
 
     res.on('finish', function() {
       // Decrease the number of running requests over the related connection
-      connections[req.socket.id].runningRequests--;
+      // (only if the socket has not been previously closed)
+      if (connections[req.socket.id]) {
+        connections[req.socket.id].runningRequests--;
+      }
     });
   });
 
-  server.terminate = function terminate(timeout, cb) {
-    if (!cb && timeout instanceof Function) {
-      cb = timeout;
-      timeout = 60 * 1000;
-    }
-
+  server.terminate = function terminate(cb) {
     var intervalId, timeoutId;
 
     // Prevent the server from accepting new connections
@@ -88,9 +89,9 @@ module.exports = function enableTerminate(server) {
       clearInterval(intervalId);
       for (var id in connections) {
         connections[id].conn.destroy();
+        connections[id].conn.unref();
       }
-      cb();
-    }, timeout);
+    }, opts.timeout);
   };
 
   return server;
