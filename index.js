@@ -31,26 +31,25 @@ module.exports = function enableTerminate(server) {
 
   server.on('connection', function(conn) {
     // Save each new connection along with the number of running requests over that connection
-    var key = conn.remoteAddress + ':' + conn.remotePort;
-    connections[key] = {
+    conn.id = conn.remoteAddress + ':' + conn.remotePort;
+    connections[conn.id] = {
       conn: conn,
       runningRequests: 0
     };
 
     conn.on('close', function() {
-      // In case the connection is closed by the keep-alive timeout
-      delete connections[key];
+      // The connection can be closed by the keep-alive timeout, or immediately on non-keep-alive connections
+      delete connections[conn.id];
     });
   });
 
   server.on('request', function(req, res) {
     // Increase the number of running requests over the related connection
-    var key = req.socket.remoteAddress + ':' + req.socket.remotePort;
-    connections[key].runningRequests++;
+    connections[req.socket.id].runningRequests++;
 
     res.on('finish', function() {
       // Decrease the number of running requests over the related connection
-      connections[key].runningRequests--;
+      connections[req.socket.id].runningRequests--;
     });
   });
 
@@ -75,10 +74,10 @@ module.exports = function enableTerminate(server) {
 
     // Poll the saved connections destroying those that have no running requests
     intervalId = setInterval(function() {
-      for (var key in connections) {
-        if (!connections[key].runningRequests) {
-          connections[key].conn.destroy();
-          delete connections[key];
+      for (var id in connections) {
+        if (!connections[id].runningRequests) {
+          connections[id].conn.destroy();
+          delete connections[id];
         }
       }
     }, 1000);
@@ -87,8 +86,8 @@ module.exports = function enableTerminate(server) {
     // even if they have some running requests yet
     timeoutId = setTimeout(function() {
       clearInterval(intervalId);
-      for (var key in connections) {
-        connections[key].conn.destroy();
+      for (var id in connections) {
+        connections[id].conn.destroy();
       }
       cb();
     }, timeout);
