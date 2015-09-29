@@ -28,11 +28,12 @@
 
 module.exports = function enableTerminate(server, opts) {
   opts = opts || {};
-  opts.timeout = opts.timeout || 60 * 1000;
+  opts.timeout = opts.timeout || 30 * 1000;
 
   var connections = {};
+  var terminating = false;
 
-  server.on('connection', function(conn) {
+  server.on('connection', function onConnection(conn) {
     // Save each new connection along with the number of running requests over that connection
     conn.id = conn.remoteAddress + ':' + conn.remotePort;
     connections[conn.id] = {
@@ -40,56 +41,59 @@ module.exports = function enableTerminate(server, opts) {
       runningRequests: 0
     };
 
-    conn.on('close', function() {
-      // The connection can be closed by the keep-alive timeout, or immediately on non-keep-alive connections
+    conn.on('close', function onClose() {
+      // The connection can be closed by the keep-alive timeout, or immediately on non keep-alive connections
       delete connections[conn.id];
     });
   });
 
-  server.on('request', function(req, res) {
+  server.on('request', function onRequest(req, res) {
     // Increase the number of running requests over the related connection
     connections[req.socket.id].runningRequests++;
 
-    res.on('finish', function() {
+    res.on('finish', function onFinish() {
       // Decrease the number of running requests over the related connection
       // (only if the socket has not been previously closed)
       if (connections[req.socket.id]) {
         connections[req.socket.id].runningRequests--;
+        // If this event happens after the "terminate" function has been invoked, it means that we are waiting
+        // for running requests to finish, so close the connection as soon as the requests finish
+        if (terminating && !connections[req.socket.id].runningRequests) {
+          connections[req.socket.id].conn.destroy();
+          delete connections[req.socket.id];
+        }
       }
     });
   });
 
   server.terminate = function terminate(cb) {
-    var intervalId, timeoutId;
+    terminating = true;
+    var timeoutId;
 
     // Prevent the server from accepting new connections
-    server.close(function onClosed(err) {
+    server.close(function(err) {
       // We get here when all the connections have been destroyed (forced or not)
       if (err) {
         return cb(err);
       }
-      clearInterval(intervalId);
       clearTimeout(timeoutId);
       cb();
     });
 
-    // Poll the saved connections destroying those that have no running requests
-    intervalId = setInterval(function() {
-      for (var id in connections) {
-        if (!connections[id].runningRequests) {
-          connections[id].conn.destroy();
-          delete connections[id];
-        }
+    // Destroy open connections that have no running requests
+    for (var id in connections) {
+      if (!connections[id].runningRequests) {
+        connections[id].conn.destroy();
+        delete connections[id];
       }
-    }, 1000);
+    }
 
     // If the timeout expires, force the destruction of all the pending connections,
     // even if they have some running requests yet
     timeoutId = setTimeout(function() {
-      clearInterval(intervalId);
       for (var id in connections) {
         connections[id].conn.destroy();
-        connections[id].conn.unref();
+        delete connections[id];
       }
     }, opts.timeout);
   };
