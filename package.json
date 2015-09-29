@@ -1,6 +1,6 @@
 {
   "name": "server-terminate",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Allow terminating a server in an orderly fashion",
   "license": "MIT",
   "author": "Jose Antonio Rodríguez <joseantonio.rodriguezfernandez@telefonica.com>",
