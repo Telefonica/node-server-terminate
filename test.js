@@ -219,7 +219,8 @@ feature('Terminate an HTTP server', function() {
     var TIMEOUT = 1000,
         server,
         duration,
-        error;
+        error,
+        terminatedByTimeout;
 
     given('that I have an HTTP server with the "terminate" function configured with a timeout', function(done) {
       server = enableTerminate(http.createServer(function onRequest(req, res) {
@@ -247,8 +248,9 @@ feature('Terminate an HTTP server', function() {
     });
     when('I terminate the server', function(done) {
       var start = process.hrtime();
-      server.terminate(function() {
+      server.terminate(function(err, terminatedByTimeout_) {
         duration = process.hrtime(start);
+        terminatedByTimeout = terminatedByTimeout_;
         done();
       });
     });
@@ -260,6 +262,9 @@ feature('Terminate an HTTP server', function() {
     then('It waits for the running request to finish or the timeout expires', function() {
       expect(hr2ms(duration)).to.be.closeTo(TIMEOUT, 50);
       expect(error).to.have.property('code', 'ECONNRESET');
+    });
+    and('and terminatedByTimeout parameter is true', function() {
+      expect(terminatedByTimeout).to.be.true;
     });
   });
 

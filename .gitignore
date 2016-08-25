@@ -1,6 +1,9 @@
 # IntelliJ project files
 .idea
 
+# Visual Studio project files
+.vscode
+
 # Logs
 logs
 *.log

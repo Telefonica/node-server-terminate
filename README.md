@@ -1,4 +1,3 @@
-# server-terminate
 Allow terminating an HTTP server in an orderly fashion:
 * Immediately closes keep-alive connections that are not being used by any HTTP request. 
 * Waits for running HTTP requests to finish before closing their connections.
@@ -24,7 +23,7 @@ enableTerminate(server).listen(PORT));
 
 
 // When you want to stop your server...
-server.terminate(function() {
+server.terminate(function(err,terminatedByTimeout) {
   // You get here when all connections have been closed
 });
 ```
@@ -34,6 +33,7 @@ It is measured in milliseconds and defaults to 30000.
 ```javascript
 enableTerminate(server, {timeout: 10000}).listen(PORT));
 ```
+If the server terminates by timeout the second paramater of the callback will be `true`.
 
 ## License
 MIT
