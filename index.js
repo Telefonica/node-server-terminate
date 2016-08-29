@@ -2,7 +2,7 @@
 
  The MIT License (MIT)
 
- Copyright (c) 2015 Telefónica Investigación y Desarrollo, S.A.U
+ Copyright (c) 2015-2016 Telefónica Investigación y Desarrollo, S.A.U
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -82,21 +82,21 @@ module.exports = function enableTerminate(server, opts) {
     });
 
     // Destroy open connections that have no running requests
-    for (var id in connections) {
+    Object.keys(connections).forEach(function(id) {
       if (!connections[id].runningRequests) {
         connections[id].conn.destroy();
         delete connections[id];
       }
-    }
+    });
 
     // If the timeout expires, force the destruction of all the pending connections,
     // even if they have some running requests yet
     timeoutId = setTimeout(function() {
       terminatedByTimeout = true;
-      for (var id in connections) {
+      Object.keys(connections).forEach(function(id) {
         connections[id].conn.destroy();
         delete connections[id];
-      }
+      });
     }, opts.timeout);
   };
 

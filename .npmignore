@@ -30,6 +30,5 @@ node_modules
 test.js
 .gitignore
 .npmignore
-.jscsrc
-.eslintrc
+.eslintrc.json
 CONTRIBUTING.md

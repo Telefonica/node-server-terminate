@@ -2,7 +2,7 @@
 
  The MIT License (MIT)
 
- Copyright (c) 2015 Telefónica Investigación y Desarrollo, S.A.U
+ Copyright (c) 2015-2016 Telefónica Investigación y Desarrollo, S.A.U
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -36,10 +36,14 @@ function hr2ms(duration) {
   return duration[0] * 1000 + duration[1] / 1e6;
 }
 
+/* global feature, scenario, given, when, then, and */
+/* eslint-disable no-unused-expressions, handle-callback-err */
+/* eslint max-nested-callbacks: ["error", 15] */
+
 feature('Setup', function() {
   scenario('Invoke "enableTerminate" over an HTTP server', function() {
-    var server,
-        returnedServer;
+    var server;
+    var returnedServer;
 
     given('that I have an HTTP server', function() {
       server = http.createServer();
@@ -60,9 +64,9 @@ feature('Terminate an HTTP server', function() {
   var dataset;
 
   scenario('No requests have been performed yet against the server', function() {
-    var server,
-        duration,
-        terminatedByTimeout;
+    var server;
+    var duration;
+    var terminatedByTimeout;
 
     given('that I have an HTTP server with the "terminate" function', function(done) {
       server = enableTerminate(http.createServer(function onRequest(req, res) {
@@ -95,9 +99,9 @@ feature('Terminate an HTTP server', function() {
     {desc: 'the server closes the connection after the keep-alive timeout', serverClose: false, clientClose: false}
   ];
   scenario('Some requests have been completed and their connections have been closed', dataset, function(variant) {
-    var server,
-        duration,
-        terminatedByTimeout;
+    var server;
+    var duration;
+    var terminatedByTimeout;
 
     given('that I have an HTTP server with the "terminate" function', function(done) {
       server = enableTerminate(http.createServer(function onRequest(req, res) {
@@ -146,9 +150,9 @@ feature('Terminate an HTTP server', function() {
   });
 
   scenario('Some requests have been completed but their connections are still open', function() {
-    var server,
-        duration,
-        terminatedByTimeout;
+    var server;
+    var duration;
+    var terminatedByTimeout;
 
     given('that I have an HTTP server with the "terminate" function', function(done) {
       server = enableTerminate(http.createServer(function onRequest(req, res) {
@@ -189,10 +193,10 @@ feature('Terminate an HTTP server', function() {
   });
 
   scenario('There are running requests', function() {
-    var DELAY = 2000,
-        server,
-        duration,
-        terminatedByTimeout;
+    var DELAY = 2000;
+    var server;
+    var duration;
+    var terminatedByTimeout;
 
     given('that I have an HTTP server with the "terminate" function', function(done) {
       server = enableTerminate(http.createServer(function onRequest(req, res) {
@@ -236,11 +240,11 @@ feature('Terminate an HTTP server', function() {
     {desc: 'Wait for the request handler to finish before exiting', waitForRequestHandler: true}
   ];
   scenario('There are running requests that take longer than the configured timeout', dataset, function(variant) {
-    var TIMEOUT = 1000,
-        server,
-        duration,
-        error,
-        terminatedByTimeout;
+    var TIMEOUT = 1000;
+    var server;
+    var duration;
+    var error;
+    var terminatedByTimeout;
 
     given('that I have an HTTP server with the "terminate" function configured with a timeout', function(done) {
       server = enableTerminate(http.createServer(function onRequest(req, res) {
@@ -287,5 +291,4 @@ feature('Terminate an HTTP server', function() {
       expect(terminatedByTimeout).to.be.true;
     });
   });
-
 });

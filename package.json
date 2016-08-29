@@ -9,7 +9,7 @@
   ],
   "main": "index",
   "scripts": {
-    "lint": "jscs index.js test.js && eslint index.js test.js",
+    "lint": "eslint index.js test.js",
     "test": "tartare test.js",
     "prepublish": "npm run lint && npm run test"
   },
@@ -29,9 +29,9 @@
     "close"
   ],
   "devDependencies": {
-    "chai": "^3.3.0",
-    "eslint": "^1.5.0",
-    "jscs": "^2.1.1",
-    "tartare": "^0.9.0"
+    "chai": "^3.5.0",
+    "eslint": "^2.13.1",
+    "eslint-config-google": "^0.6.0",
+    "tartare": "^1.0.2"
   }
 }

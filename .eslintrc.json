@@ -1,0 +1,20 @@
+{
+  "env": {
+    "node": true
+  },
+  "extends": "google",
+  "rules": {
+    "max-len": ["error", {
+      "code": 120,
+      "ignoreTrailingComments": true,
+      "ignoreUrls": true
+    }],
+    "quotes": ["error", "single", {
+      "avoidEscape": true,
+      "allowTemplateLiterals": true
+    }],
+    "no-shadow": "error",
+    "require-jsdoc": "off",
+    "valid-jsdoc": "off"
+  }
+}
