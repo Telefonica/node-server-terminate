@@ -61,7 +61,8 @@ feature('Terminate an HTTP server', function() {
 
   scenario('No requests have been performed yet against the server', function() {
     var server,
-        duration;
+        duration,
+        terminatedByTimeout;
 
     given('that I have an HTTP server with the "terminate" function', function(done) {
       server = enableTerminate(http.createServer(function onRequest(req, res) {
@@ -74,13 +75,17 @@ feature('Terminate an HTTP server', function() {
     });
     when('I terminate the server', function(done) {
       var start = process.hrtime();
-      server.terminate(function() {
+      server.terminate(function(err, terminatedByTimeout_) {
         duration = process.hrtime(start);
+        terminatedByTimeout = terminatedByTimeout_;
         done();
       });
     });
     then('It is immediately closed', function() {
       expect(hr2ms(duration)).to.be.below(10);
+    });
+    and('and the terminatedByTimeout parameter is false', function() {
+      expect(terminatedByTimeout).to.be.false;
     });
   });
 
@@ -91,7 +96,8 @@ feature('Terminate an HTTP server', function() {
   ];
   scenario('Some requests have been completed and their connections have been closed', dataset, function(variant) {
     var server,
-        duration;
+        duration,
+        terminatedByTimeout;
 
     given('that I have an HTTP server with the "terminate" function', function(done) {
       server = enableTerminate(http.createServer(function onRequest(req, res) {
@@ -125,19 +131,24 @@ feature('Terminate an HTTP server', function() {
     });
     when('I terminate the server', function(done) {
       var start = process.hrtime();
-      server.terminate(function() {
+      server.terminate(function(err, terminatedByTimeout_) {
         duration = process.hrtime(start);
+        terminatedByTimeout = terminatedByTimeout_;
         done();
       });
     });
     then('It is immediately closed', function() {
       expect(hr2ms(duration)).to.be.below(10);
     });
+    and('and the terminatedByTimeout parameter is false', function() {
+      expect(terminatedByTimeout).to.be.false;
+    });
   });
 
   scenario('Some requests have been completed but their connections are still open', function() {
     var server,
-        duration;
+        duration,
+        terminatedByTimeout;
 
     given('that I have an HTTP server with the "terminate" function', function(done) {
       server = enableTerminate(http.createServer(function onRequest(req, res) {
@@ -163,20 +174,25 @@ feature('Terminate an HTTP server', function() {
     });
     when('I terminate the server', function(done) {
       var start = process.hrtime();
-      server.terminate(function() {
+      server.terminate(function(err, terminatedByTimeout_) {
         duration = process.hrtime(start);
+        terminatedByTimeout = terminatedByTimeout_;
         done();
       });
     });
     then('It is immediately closed', function() {
       expect(hr2ms(duration)).to.be.below(10);
     });
+    and('and the terminatedByTimeout parameter is false', function() {
+      expect(terminatedByTimeout).to.be.false;
+    });
   });
 
   scenario('There are running requests', function() {
     var DELAY = 2000,
         server,
-        duration;
+        duration,
+        terminatedByTimeout;
 
     given('that I have an HTTP server with the "terminate" function', function(done) {
       server = enableTerminate(http.createServer(function onRequest(req, res) {
@@ -201,13 +217,17 @@ feature('Terminate an HTTP server', function() {
     });
     when('I terminate the server', function(done) {
       var start = process.hrtime();
-      server.terminate(function() {
+      server.terminate(function(err, terminatedByTimeout_) {
         duration = process.hrtime(start);
+        terminatedByTimeout = terminatedByTimeout_;
         done();
       });
     });
     then('It waits for the running requests to finish', function() {
       expect(hr2ms(duration)).to.be.closeTo(DELAY - (DELAY / 2), 50);
+    });
+    and('and the terminatedByTimeout parameter is false', function() {
+      expect(terminatedByTimeout).to.be.false;
     });
   });
 
@@ -263,7 +283,7 @@ feature('Terminate an HTTP server', function() {
       expect(hr2ms(duration)).to.be.closeTo(TIMEOUT, 50);
       expect(error).to.have.property('code', 'ECONNRESET');
     });
-    and('and terminatedByTimeout parameter is true', function() {
+    and('and the terminatedByTimeout parameter is true', function() {
       expect(terminatedByTimeout).to.be.true;
     });
   });
