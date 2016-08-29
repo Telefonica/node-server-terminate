@@ -4,6 +4,9 @@
   "description": "Allow terminating a server in an orderly fashion",
   "license": "MIT",
   "author": "Jose Antonio Rodríguez <joseantonio.rodriguezfernandez@telefonica.com>",
+  "contributors": [
+    "Javier Martínez Álvarez <javier.martinezalvarez@telefonica.com>"
+  ],
   "main": "index",
   "scripts": {
     "lint": "jscs index.js test.js && eslint index.js test.js",
