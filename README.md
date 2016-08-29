@@ -24,7 +24,7 @@ enableTerminate(server).listen(PORT));
 
 
 // When you want to stop your server...
-server.terminate(function() {
+server.terminate(function(err, terminatedByTimeout) {
   // You get here when all connections have been closed
 });
 ```
@@ -34,6 +34,8 @@ It is measured in milliseconds and defaults to 30000.
 ```javascript
 enableTerminate(server, {timeout: 10000}).listen(PORT));
 ```
+
+If the server terminates by timeout the second parameter of the callback will be `true`.
 
 ## License
 MIT

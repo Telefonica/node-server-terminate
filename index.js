@@ -32,6 +32,7 @@ module.exports = function enableTerminate(server, opts) {
 
   var connections = {};
   var terminating = false;
+  var terminatedByTimeout = false;
 
   server.on('connection', function onConnection(conn) {
     // Save each new connection along with the number of running requests over that connection
@@ -77,7 +78,7 @@ module.exports = function enableTerminate(server, opts) {
         return cb(err);
       }
       clearTimeout(timeoutId);
-      cb();
+      cb(null, terminatedByTimeout);
     });
 
     // Destroy open connections that have no running requests
@@ -91,6 +92,7 @@ module.exports = function enableTerminate(server, opts) {
     // If the timeout expires, force the destruction of all the pending connections,
     // even if they have some running requests yet
     timeoutId = setTimeout(function() {
+      terminatedByTimeout = true;
       for (var id in connections) {
         connections[id].conn.destroy();
         delete connections[id];
