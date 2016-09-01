@@ -1,6 +1,6 @@
 {
   "name": "server-terminate",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Allow terminating a server in an orderly fashion",
   "license": "MIT",
   "author": "Jose Antonio Rodríguez <joseantonio.rodriguezfernandez@telefonica.com>",
@@ -11,7 +11,9 @@
   "scripts": {
     "lint": "eslint index.js test/*.js && tslint index.d.ts test/*.ts",
     "test": "tartare test/*.spec.js && tsc",
-    "prepublish": "npm run lint && npm run test"
+    "changelog": "conventional-changelog --preset jshint --infile CHANGELOG.md --same-file",
+    "changelog-gh-release": "conventional-changelog --preset jshint --config .changelog.js",
+    "release": "release-it"
   },
   "repository": {
     "type": "git",
@@ -29,8 +31,10 @@
   ],
   "devDependencies": {
     "chai": "^3.5.0",
+    "conventional-changelog-cli": "^1.2.0",
     "eslint": "^2.13.1",
     "eslint-config-google": "^0.6.0",
+    "release-it": "^2.4.3",
     "tartare": "^1.0.2",
     "tslint": "^3.15.1",
     "tslint-config-typings": "^0.2.3",

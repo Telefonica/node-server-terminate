@@ -21,3 +21,5 @@ tslint.json
 .npmignore
 .eslintrc.json
 CONTRIBUTING.md
+.changelog.js
+.release.json
