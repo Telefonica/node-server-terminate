@@ -1,3 +1,13 @@
+<a name="1.3.1"></a>
+## [1.3.1](https://github.com/Telefonica/node-server-terminate/compare/v1.3.0...v1.3.1) (2016-09-01)
+
+
+### Bug Fixes
+
+* Default export is not working at runtime ([52e5d10](https://github.com/Telefonica/node-server-terminate/commit/52e5d10))
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/Telefonica/node-server-terminate/compare/v1.0.0...v1.3.0) (2016-09-01)
 
