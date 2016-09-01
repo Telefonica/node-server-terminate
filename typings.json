@@ -1,0 +1,5 @@
+{
+  "globalDependencies": {
+    "node": "registry:dt/node#0.10.1+20160720000508"
+  }
+}

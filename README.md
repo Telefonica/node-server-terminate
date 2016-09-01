@@ -29,6 +29,22 @@ server.terminate(function(err, terminatedByTimeout) {
 });
 ```
 
+Or if you are using TypeScript:
+```typescript
+import * as http from 'http';
+import enableTerminate from 'server-terminate';
+
+let server: http.Server = http.createServer(function onRequest(req: http.ServerRequest, res: http.ServerResponse) {
+    // Do your stuff here
+});
+enableTerminate(server).listen(PORT));
+
+// When you want to stop your server...
+server.terminate((err, terminatedByTimeout) => {
+    // You get here when all connections have been closed
+});
+```
+
 You can set a timeout to force connection closing even when they are still being used by running HTTP requests.
 It is measured in milliseconds and defaults to 30000.
 ```javascript

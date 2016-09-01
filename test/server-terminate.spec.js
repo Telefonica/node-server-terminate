@@ -28,7 +28,7 @@
 
 var expect = require('chai').expect;
 var http = require('http');
-var enableTerminate = require('./index');
+var enableTerminate = require('../index');
 
 var PORT = 3113;
 
