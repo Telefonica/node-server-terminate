@@ -1,5 +1,5 @@
 import * as http from 'http';
-import enableTerminate from '../';
+import enableTerminate = require('../');
 
 let server: http.Server = http.createServer(function onRequest(req: http.ServerRequest, res: http.ServerResponse) {
     res.writeHead(200);
@@ -12,4 +12,5 @@ server.listen(8080);
 
 server.terminate((err, terminatedByTimeout) => {
     // You get here when all connections have been closed
+    console.log('Server terminated. terminatedByTimeout:', terminatedByTimeout);  // tslint:disable-line no-console
 });

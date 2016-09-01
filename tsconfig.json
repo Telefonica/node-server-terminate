@@ -5,8 +5,7 @@
     "noImplicitAny": false,
     "sourceMap": false,
     "moduleResolution": "node",
-    "pretty": true,
-    "noEmit": true
+    "pretty": true
   },
   "exclude": [
     "node_modules"

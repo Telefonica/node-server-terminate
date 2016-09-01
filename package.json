@@ -9,8 +9,8 @@
   ],
   "main": "index",
   "scripts": {
-    "lint": "eslint index.js test/*.js && tslint index.d.ts test/*.ts",
-    "test": "tartare test/*.spec.js && tsc",
+    "lint": "eslint index.js test/*.spec.js && tslint index.d.ts test/*.ts",
+    "test": "tartare test/*.spec.js && tsc && node test/server-terminate.typings.js",
     "changelog": "conventional-changelog --preset jshint --infile CHANGELOG.md --same-file",
     "changelog-gh-release": "conventional-changelog --preset jshint --config .changelog.js",
     "release": "release-it"

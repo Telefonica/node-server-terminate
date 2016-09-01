@@ -1,6 +1,7 @@
 import * as http from 'http';
 
-export default function enableTerminate(server: http.Server, opts?: Options): http.Server;
+declare function enableTerminate(server: http.Server, opts?: Options): http.Server;
+export = enableTerminate;
 
 interface Options {
     timeout?: number;

@@ -32,7 +32,7 @@ server.terminate(function(err, terminatedByTimeout) {
 Or if you are using TypeScript:
 ```typescript
 import * as http from 'http';
-import enableTerminate from 'server-terminate';
+import enableTerminate = require('server-terminate');
 
 let server: http.Server = http.createServer(function onRequest(req: http.ServerRequest, res: http.ServerResponse) {
     // Do your stuff here
