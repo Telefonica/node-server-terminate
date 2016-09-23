@@ -13,5 +13,4 @@ logs
 node_modules
 
 # TypeScript
-/typings
 /test/server-terminate.typings.js

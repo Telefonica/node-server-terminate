@@ -5,7 +5,8 @@
   "license": "MIT",
   "author": "Jose Antonio Rodríguez <joseantonio.rodriguezfernandez@telefonica.com>",
   "contributors": [
-    "Javier Martínez Álvarez <javier.martinezalvarez@telefonica.com>"
+    "Javier Martínez Álvarez <javier.martinezalvarez@telefonica.com>",
+    "Javier Mendiara Cañardo <javier.mendiaracanardo@telefonica.com>"
   ],
   "main": "index",
   "scripts": {

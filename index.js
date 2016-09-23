@@ -25,11 +25,13 @@
  */
 
 'use strict';
+
 module.exports = enableTerminate;
 // Support for ES6 imports.
 // Now you can make `import enableTerminate from 'enable-terminate'`
 // and get a reference to this function
 enableTerminate.default = enableTerminate;
+
 function enableTerminate(server, opts) {
   opts = opts || {};
   opts.timeout = opts.timeout || 30 * 1000;

@@ -9,7 +9,7 @@ let server: http.Server = http.createServer(function onRequest(req: http.ServerR
 server = enableTerminate(server);
 server = enableTerminate(server, {});
 server = enableTerminate(server, {timeout: 2000});
-server.listen(8080);
+server.listen(3113);
 
 server.terminate((err, terminatedByTimeout) => {
     // You get here when all connections have been closed
@@ -18,7 +18,7 @@ server.terminate((err, terminatedByTimeout) => {
     server = enableTerminate2(server);
     server = enableTerminate2(server, {});
     server = enableTerminate2(server, {timeout: 2000});
-    server.listen(8080);
+    server.listen(3113);
 
     server.terminate((err, terminatedByTimeout) => {
         // You get here when all connections have been closed

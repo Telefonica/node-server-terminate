@@ -4,7 +4,7 @@
     "beforeStartCommand": "npm run lint && npm run test",
     "beforeStageCommand": "npm run changelog"
   },
-  "commitMessage": "[[CHORE]] Bump version %s",
+  "commitMessage": "[[CHORE]] Bump version to %s",
   "tagName": "v%s",
   "tagAnnotation": "v%s",
   "github": {
