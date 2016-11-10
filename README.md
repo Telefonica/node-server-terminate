@@ -23,7 +23,7 @@ var http = require('http');
 var server = http.createServer(function onRequest(req, res) {
   // Do your stuff here
 });
-enableTerminate(server).listen(PORT));
+enableTerminate(server).listen(PORT);
 
 
 // When you want to stop your server...
@@ -40,7 +40,7 @@ import enableTerminate from 'server-terminate';
 let server: http.Server = http.createServer(function onRequest(req: http.ServerRequest, res: http.ServerResponse) {
     // Do your stuff here
 });
-enableTerminate(server).listen(PORT));
+enableTerminate(server).listen(PORT);
 
 // When you want to stop your server...
 server.terminate((err, terminatedByTimeout) => {
@@ -51,7 +51,7 @@ server.terminate((err, terminatedByTimeout) => {
 You can set a timeout to force connection closing even when they are still being used by running HTTP requests.
 It is measured in milliseconds and defaults to 30000.
 ```javascript
-enableTerminate(server, {timeout: 10000}).listen(PORT));
+enableTerminate(server, {timeout: 10000}).listen(PORT);
 ```
 
 If the server terminates by timeout the second parameter of the callback will be `true`.
