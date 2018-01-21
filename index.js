@@ -2,7 +2,7 @@
 
  The MIT License (MIT)
 
- Copyright (c) 2015-2016 Telefónica Investigación y Desarrollo, S.A.U
+ Copyright (c) 2015-2018 Telefónica Investigación y Desarrollo, S.A.U
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -55,19 +55,20 @@ function enableTerminate(server, opts) {
   });
 
   server.on('request', function onRequest(req, res) {
+    var connId = req.socket.id || req.socket._parent.id;  // On SSL connections the TLS socket inherits from the original socket
     // Increase the number of running requests over the related connection
-    connections[req.socket.id].runningRequests++;
+    connections[connId].runningRequests++;
 
     res.on('finish', function onFinish() {
       // Decrease the number of running requests over the related connection
       // (only if the socket has not been previously closed)
-      if (connections[req.socket.id]) {
-        connections[req.socket.id].runningRequests--;
+      if (connections[connId]) {
+        connections[connId].runningRequests--;
         // If this event happens after the "terminate" function has been invoked, it means that we are waiting
         // for running requests to finish, so close the connection as soon as the requests finish
-        if (terminating && !connections[req.socket.id].runningRequests) {
-          connections[req.socket.id].conn.destroy();
-          delete connections[req.socket.id];
+        if (terminating && !connections[connId].runningRequests) {
+          connections[connId].conn.destroy();
+          delete connections[connId];
         }
       }
     });

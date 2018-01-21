@@ -2,7 +2,7 @@
 
 ![TypeScript definition](https://img.shields.io/badge/TypeScript%20Definition-%E2%9C%93-blue.svg)
 
-Allow terminating an HTTP server in an orderly fashion:
+Allow terminating an HTTP/HTTPS server in an orderly fashion:
 * Immediately closes keep-alive connections that are not being used by any HTTP request. 
 * Waits for running HTTP requests to finish before closing their connections.
 * Closes connections with running HTTP requests after a given timeout.
