@@ -1,3 +1,13 @@
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/Telefonica/node-server-terminate/compare/v1.4.0...v1.5.0) (2018-01-22)
+
+
+### Features
+
+* Add support for HTTPS ([8e8b214](https://github.com/Telefonica/node-server-terminate/commit/8e8b214))
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/Telefonica/node-server-terminate/compare/v1.3.1...v1.4.0) (2016-09-23)
 
