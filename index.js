@@ -55,7 +55,7 @@ function enableTerminate(server, opts) {
   });
 
   server.on('request', function onRequest(req, res) {
-    var connId = req.socket.id || req.socket._parent.id;  // On SSL connections the TLS socket inherits from the original socket
+    var connId = req.socket.id || req.socket._parent.id; // On SSL connections the TLS socket inherits from the original socket
     // Increase the number of running requests over the related connection
     connections[connId].runningRequests++;
 

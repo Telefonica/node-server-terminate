@@ -138,7 +138,7 @@ feature('Terminate an HTTP server', function() {
           res.end();
         });
       }).listen(PORT, done));
-      server.timeout = 3000;  // keep-alive timeout
+      server.timeout = 3000; // keep-alive timeout
     });
     and('Some requests have been performed against the server and their connections have been closed', function(done) {
       var opts = {
@@ -375,7 +375,7 @@ feature('Terminate an HTTPS server', function() {
           res.end();
         });
       }).listen(PORT, done));
-      server.timeout = 3000;  // keep-alive timeout
+      server.timeout = 3000; // keep-alive timeout
     });
     and('Some requests have been performed against the server and their connections have been closed', function(done) {
       var opts = {

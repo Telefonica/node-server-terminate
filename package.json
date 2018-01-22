@@ -9,6 +9,7 @@
     "Javier Mendiara Cañardo <javier.mendiaracanardo@telefonica.com>"
   ],
   "main": "index",
+  "types": "index.d.ts",
   "scripts": {
     "lint": "eslint index.js test/*.spec.js && tslint index.d.ts test/*.ts",
     "test": "tartare test/*.spec.js && tsc && node test/server-terminate.typings.js",
@@ -31,15 +32,15 @@
     "close"
   ],
   "devDependencies": {
-    "@types/node": "^6.0.40",
-    "chai": "^3.5.0",
-    "conventional-changelog-cli": "^1.2.0",
-    "eslint": "^2.13.1",
+    "@types/node": "^9.3.0",
+    "chai": "^4.1.2",
+    "conventional-changelog-cli": "^1.3.5",
+    "eslint": "^4.16.0",
     "eslint-config-google": "^0.6.0",
-    "release-it": "^2.4.3",
-    "tartare": "^1.0.2",
-    "tslint": "^3.15.1",
-    "tslint-config-typings": "^0.2.3",
-    "typescript": "^2.0.3"
+    "release-it": "^6.0.0",
+    "tartare": "^1.2.1",
+    "tslint": "^5.9.1",
+    "tslint-config-typings": "^0.3.1",
+    "typescript": "^2.6.2"
   }
 }

@@ -1,0 +1,23 @@
+{
+  "buildCommand": "npm run changelog",
+  "changelogCommand": "npm run -s changelog-gh-release",
+  "src": {
+    "commitMessage": "[[CHORE]] Bump version to %s",
+    "tagName": "v%s",
+    "tagAnnotation": "v%s",
+    "beforeStartCommand": "npm run lint && npm run test"
+  },
+  "npm": {
+    "publish": true
+  },
+  "github": {
+    "release": true,
+    "releaseName": "v%s",
+    "tokenRef": "RELEASEIT_GITHUB_TOKEN"
+  },
+  "prompt": {
+    "src": {
+      "status": true
+    }
+  }
+}
